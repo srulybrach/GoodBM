@@ -4,6 +4,7 @@ import edu.touro.mco152.bm.App;
 import edu.touro.mco152.bm.Util;
 import edu.touro.mco152.bm.persist.DiskRun;
 import edu.touro.mco152.bm.persist.DiskRun.BlockSequence;
+import org.jfree.chart.ChartPanel;
 
 import javax.swing.*;
 import javax.swing.text.DefaultCaret;
@@ -89,11 +90,11 @@ public final class MainFrame extends javax.swing.JFrame {
      */
     public MainFrame() {
         initComponents();
-        Gui.createChartPanel();
+        ChartPanel chartPanel = Gui.createChartPanel();
         mountPanel.setLayout(new BorderLayout());
-        Gui.chartPanel.setSize(mountPanel.getSize());
-        Gui.chartPanel.setSize(mountPanel.getWidth(), 200);
-        mountPanel.add(Gui.chartPanel);
+        chartPanel.setSize(mountPanel.getSize());
+        chartPanel.setSize(mountPanel.getWidth(), 200);
+        mountPanel.add(chartPanel);
         totalTxProgBar.setStringPainted(true);
         totalTxProgBar.setValue(0);
         totalTxProgBar.setString("");
@@ -539,7 +540,7 @@ public final class MainFrame extends javax.swing.JFrame {
 
         fileMenu.setText("File");
 
-        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_DOWN_MASK));
         jMenuItem1.setText("Exit");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

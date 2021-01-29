@@ -13,6 +13,7 @@ import org.jfree.data.xy.XYSeriesCollection;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.Serial;
 import java.text.NumberFormat;
 
 /**
@@ -70,6 +71,7 @@ public final class Gui {
         chartPanel = new ChartPanel(chart) {
             // Only way to set the size of chart panel
             // ref: http://www.jfree.org/phpBB2/viewtopic.php?p=75516
+            @Serial
             private static final long serialVersionUID = 1L;
 
             @Override

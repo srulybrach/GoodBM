@@ -290,11 +290,11 @@ public class App {
     }
 
     public static long targetMarkSizeKb() {
-        return blockSizeKb * numOfBlocks;
+        return (long) blockSizeKb * numOfBlocks;
     }
 
     public static long targetTxSizeKb() {
-        return blockSizeKb * numOfBlocks * numOfMarks;
+        return (long) blockSizeKb * numOfBlocks * numOfMarks;
     }
 
     public static void updateMetrics(DiskMark mark) {

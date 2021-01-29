@@ -1,6 +1,7 @@
 package edu.touro.mco152.bm.persist;
 
 import javax.persistence.*;
+import java.io.Serial;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -21,7 +22,9 @@ public class DiskRun implements Serializable {
 
     static final DecimalFormat DF = new DecimalFormat("###.##");
     static final DateFormat DATE_FORMAT = new SimpleDateFormat("EEE, MMM d HH:mm:ss");
+    @Serial
     private static final long serialVersionUID = 1L;
+
     @Column
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

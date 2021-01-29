@@ -19,8 +19,8 @@ public class Util {
     /**
      * Deletes the Directory and all files within
      *
-     * @param path
-     * @return
+     * @param path Directory to delete
+     * @return True if path deleted successfully
      */
     static public boolean deleteDirectory(File path) {
         if (path.exists()) {
@@ -214,6 +214,7 @@ public class Util {
                 line = reader.readLine();
             }
         } catch (IOException | InterruptedException e) {
+            System.err.println("Exception retrieving disk info: " + e.getMessage());
         }
         return null;
     }
@@ -259,7 +260,7 @@ public class Util {
                 line = reader.readLine();
             }
         } catch (IOException | InterruptedException e) {
-            System.err.println("IO exception retrieveing disk info");
+            System.err.println("Exception in getModelFromLetter2: " + e.getMessage());
         }
         return null;
     }
@@ -292,6 +293,7 @@ public class Util {
                 line = reader.readLine();
             }
         } catch (IOException | InterruptedException e) {
+            System.err.println("Exception getDeviceFromPath: " + e.getMessage());
         }
         return null;
     }
@@ -318,6 +320,7 @@ public class Util {
                 line = reader.readLine();
             }
         } catch (IOException | InterruptedException e) {
+            System.err.println("Exception getDeviceModel: " + e.getMessage());
         }
         return null;
     }
@@ -343,6 +346,7 @@ public class Util {
                 line = reader.readLine();
             }
         } catch (IOException | InterruptedException e) {
+            System.err.println("Exception getDeviceSize: " + e.getMessage());
         }
         return null;
     }
@@ -363,6 +367,7 @@ public class Util {
                 line = reader.readLine();
             }
         } catch (IOException | InterruptedException e) {
+            System.err.println("Exception getDeviceFromPathOSX: " + e.getMessage());
         }
         return null;
     }
@@ -381,6 +386,7 @@ public class Util {
                 line = reader.readLine();
             }
         } catch (IOException | InterruptedException e) {
+            System.err.println("Exception getDeviceModelOSX: " + e.getMessage());
         }
         return "Generic " + devicePath;
     }

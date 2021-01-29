@@ -10,12 +10,14 @@ import edu.touro.mco152.bm.persist.DiskRun;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.io.Serial;
 
 /**
  * @author James
  */
 public class RunPanel extends javax.swing.JPanel {
 
+    @Serial
     private static final long serialVersionUID = 1L;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
@@ -57,6 +59,7 @@ public class RunPanel extends javax.swing.JPanel {
                         "Disk Info", "IO Mode", "Block Order", "Marks", "Blocks", "B. Size", "Tx Size", "Start Time", "Duration", "Max (MB/s)", "Min (MB/s)", "Avg (MB/s)"
                 }
         ) {
+            @Serial
             private static final long serialVersionUID = 1L;
             boolean[] canEdit = new boolean[]{
                     false, false, false, false, false, false, false, false, false, false, false, false

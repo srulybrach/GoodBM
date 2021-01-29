@@ -18,8 +18,15 @@ public class EM {
 
     public static EntityManager getEntityManager() {
         if (em == null) {
-            EntityManagerFactory emf = Persistence.createEntityManagerFactory("jDiskMarkPU");
-            em = emf.createEntityManager();
+            try {
+                EntityManagerFactory emf = Persistence.createEntityManagerFactory("jDiskMarkPU");
+                em = emf.createEntityManager();
+            } catch (Exception exc)
+            {
+                System.err.println("EM: FATAL Error initializing persistence: " + exc.getMessage());
+                System.err.println("Make sure persistence.xml is accessible");
+                System.exit(4);
+            }
         }
         return em;
     }
