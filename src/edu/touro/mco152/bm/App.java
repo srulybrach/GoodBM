@@ -10,6 +10,7 @@ import javax.swing.*;
 import javax.swing.UIManager.LookAndFeelInfo;
 import java.beans.PropertyChangeEvent;
 import java.io.*;
+import java.nio.file.Files;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -238,9 +239,8 @@ public class App {
             //}
         }
 
-        //2. check can write to location
-        if (!locationDir.canWrite()) {
-            msg("Selected directory can not be written to... aborting");
+        //2. Set up area on disk for benchmark files, either as specified, or in temp area
+        if (!setupDataArea()) {
             return;
         }
 
@@ -248,24 +248,7 @@ public class App {
         state = State.DISK_TEST_STATE;
         Gui.mainFrame.adjustSensitivity();
 
-        //4. create data dir reference
-        dataDir = new File(locationDir.getAbsolutePath() + File.separator + DATADIRNAME);
-
-        //5. remove existing test data if exist
-        if (App.autoRemoveData && dataDir.exists()) {
-            if (dataDir.delete()) {
-                msg("removed existing data dir");
-            } else {
-                msg("unable to remove existing data dir");
-            }
-        }
-
-        //6. create data dir if not already present
-        if (!dataDir.exists()) {
-            dataDir.mkdirs();
-        }
-
-        //7. start disk worker thread
+        //4. set up disk worker thread and its event handlers
         worker = new DiskWorker();
         worker.addPropertyChangeListener((final PropertyChangeEvent event) -> {
             switch (event.getPropertyName()) {
@@ -286,7 +269,49 @@ public class App {
                     break;
             }
         });
+
+        //5. start the Swing worker thread
         worker.execute();
+    }
+
+    /**
+     * Set up data area for use by temp benchmark files. Will try to use configured area,
+     * if not available, will use opsys temp area
+     * @return true if successful
+     */
+    private static boolean setupDataArea() {
+        // Check if can write to configured location
+        if (!locationDir.canWrite()) {
+            msg("Selected directory '" + locationDir +"' can not be written to. Trying Temp area");
+
+            try {
+                locationDir = Files.createTempDirectory("badBM").toFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+            }
+
+            if (!locationDir.canWrite()) {
+                msg("Can not write to Temp area, aborting this benchmark");
+                return false;
+            }
+        }
+
+        // Remove existing test data if exist
+        if (App.autoRemoveData && dataDir.exists()) {
+            if (dataDir.delete()) {
+                msg("removed existing data dir");
+            } else {
+                msg("unable to remove existing data dir");
+            }
+        }
+
+        // Create data dir if not already present
+        if (!dataDir.exists()) {
+            dataDir.mkdirs();
+        }
+
+        return true;
     }
 
     public static long targetMarkSizeKb() {
