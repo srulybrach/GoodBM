@@ -1,6 +1,6 @@
 package edu.touro.mco152.bm.persist;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
 import java.text.DateFormat;

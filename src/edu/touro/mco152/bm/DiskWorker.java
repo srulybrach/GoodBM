@@ -4,7 +4,7 @@ import edu.touro.mco152.bm.persist.DiskRun;
 import edu.touro.mco152.bm.persist.EM;
 import edu.touro.mco152.bm.ui.Gui;
 
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
 import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
