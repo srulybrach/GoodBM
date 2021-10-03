@@ -9,6 +9,7 @@ The purpose of this program is to compute and provide some performance informati
 
 
 **Usage**
+10/2021 Updated to run with JDK 16. EclipseLink does not yet support JDK 17.
 
 To Execute the program:
 -	**From an IDE** – Locate the main() method in App.java, if the IDE is set up to recognize this as a Java project, there should be an icon to the left of the main() method you can click to start running it. After starting it will take some time to start up, and some messages will be logged to the console. If its running you should see a new window with a “Java Coffeecup” as its icon. Go to that application, click on the ”Data Location” tab to configure a location on your disk where temporary benchmark files should be placed. It will remember this configuration for the future. 
@@ -23,7 +24,7 @@ For UNIX/Mac:
 
 For Windows native or Git Bash command line (must use semicolon instead of colon for path separator):    
 
-	java  -cp “out/production/lcmbadbm;libs/*  edu.touro.mco152.bm.App
+	java  -cp "out/production/lcmbadbm;libs/*"  edu.touro.mco152.bm.App
 
 
 
