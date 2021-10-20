@@ -42,3 +42,8 @@ tasks.named('test') {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
 }
+
+sourceSets  {
+    // this may be needed to make entity classes visible to the persistence scanner
+    sourceSets.main.output.resourcesDir = sourceSets.main.java.outputDir
+}
