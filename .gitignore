@@ -10,7 +10,6 @@ IntelliJ Items
 # build artifacts
 .gradle/
 bin/
-build/
 out/
 
 # program execution artifacts
@@ -26,3 +25,9 @@ gradle/wrapper
 
 #ignore changes to the apps properties file
 jdm.properties
+
+# Ignore Gradle project-specific cache directory
+.gradle
+
+# Ignore Gradle build output directory
+build
