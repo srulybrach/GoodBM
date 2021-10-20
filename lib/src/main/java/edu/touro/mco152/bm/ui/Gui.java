@@ -23,12 +23,12 @@ public final class Gui {
 
     public static ChartPanel chartPanel = null;
     public static MainFrame mainFrame = null;
-    public static SelectFrame selFrame = null;
+    public static edu.touro.mco152.bm.ui.SelectFrame selFrame = null;
     public static XYSeries wSeries, wAvgSeries, wMaxSeries, wMinSeries;
     public static XYSeries rSeries, rAvgSeries, rMaxSeries, rMinSeries;
     public static JFreeChart chart;
     public static JProgressBar progressBar = null;
-    public static RunPanel runPanel = null;
+    public static edu.touro.mco152.bm.ui.RunPanel runPanel = null;
 
     public static ChartPanel createChartPanel() {
 
