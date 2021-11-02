@@ -20,11 +20,11 @@ You can now click “Start” on top left of window to start a benchmark. If its
 
 For UNIX/Mac:      
 
-	java  -cp out/production/lcmbadbm:libs/*  edu.touro.mco152.bm.App
+	java  -cp out/production/lcmbadbm:libs/*  main.bm.App
 
 For Windows native or Git Bash command line (must use semicolon instead of colon for path separator):    
 
-	java  -cp "out/production/lcmbadbm;libs/*"  edu.touro.mco152.bm.App
+	java  -cp "out/production/lcmbadbm;libs/*"  main.bm.App
 
 
 
