@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Sun Nov 07 15:29:22 EST 2021:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.15.2.0 - (1873585): instance a816c00e-017c-fc17-5e4e-00000f7b87a0 
+on database directory C:\Users\sruly\IdeaProjects\badbm\derbyDB with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@3764951d 
+Loaded from file:/C:/Users/sruly/IdeaProjects/badbm/libs/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=15+36-1562
+user.dir=C:\Users\sruly\IdeaProjects\badbm
+os.name=Windows 10
+os.arch=amd64
+os.version=10.0
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
