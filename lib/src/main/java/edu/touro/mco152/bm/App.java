@@ -49,6 +49,8 @@ public class App {
     public static int nextMarkNumber = 1;   // number of the next mark
     public static double wMax = -1, wMin = -1, wAvg = -1;
     public static double rMax = -1, rMin = -1, rAvg = -1;
+    private static Swing swing = new Swing();
+
 
     /**
      * @param args the command line arguments
@@ -226,7 +228,7 @@ public class App {
             msg("worker is null abort...");
             return;
         }
-        worker.cancel(true);
+        swing.cancel(true);
     }
 
     public static void startBenchmark() {
@@ -249,8 +251,9 @@ public class App {
         Gui.mainFrame.adjustSensitivity();
 
         //4. set up disk worker thread and its event handlers
-        worker = new DiskWorker();
-        worker.addPropertyChangeListener((final PropertyChangeEvent event) -> {
+        swing = new Swing();
+        worker = new DiskWorker(swing);
+        swing.addPropertyChangeListening((final PropertyChangeEvent event) -> {
             switch (event.getPropertyName()) {
                 case "progress":
                     int value = (Integer) event.getNewValue();
@@ -271,7 +274,7 @@ public class App {
         });
 
         //5. start the Swing worker thread
-        worker.execute();
+        swing.executes();
     }
 
     /**
