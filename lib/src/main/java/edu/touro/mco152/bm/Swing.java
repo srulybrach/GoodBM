@@ -1,9 +1,19 @@
 package edu.touro.mco152.bm;
 
+import edu.touro.mco152.bm.ui.Gui;
+
 import javax.swing.*;
 import java.beans.PropertyChangeListener;
+import java.util.List;
+
+import static edu.touro.mco152.bm.App.dataDir;
 
 public class Swing extends SwingWorker<Boolean, DiskMark> implements BenchMarkOutput{
+    DiskWorker worker;
+
+    public void setSwing(DiskWorker worker){
+        this.worker = worker;
+    }
 
     @Override
     public boolean cancelled() {
@@ -16,13 +26,8 @@ public class Swing extends SwingWorker<Boolean, DiskMark> implements BenchMarkOu
     }
 
     @Override
-    public <V> void doPublish(DiskMark x) {
+    public void doPublish(DiskMark x) {
         publish(x);
-    }
-
-    @Override
-    public boolean doEverything() {
-        return false;
     }
 
     @Override
@@ -43,6 +48,31 @@ public class Swing extends SwingWorker<Boolean, DiskMark> implements BenchMarkOu
 
     @Override
     protected Boolean doInBackground() throws Exception {
-        return doEverything();
+        return worker.doEverything();
+    }
+
+    @Override
+    public boolean doEverything() throws Exception {
+        return doInBackground();
+    }
+
+    @Override
+    protected void process(List<DiskMark> markList) {
+        markList.stream().forEach((dm) -> {
+            if (dm.type == DiskMark.MarkType.WRITE) {
+                Gui.addWriteMark(dm);
+            } else {
+                Gui.addReadMark(dm);
+            }
+        });
+    }
+
+    @Override
+    protected void done() {
+        if (App.autoRemoveData) {
+            Util.deleteDirectory(dataDir);
+        }
+        App.state = App.State.IDLE_STATE;
+        Gui.mainFrame.adjustSensitivity();
     }
 }

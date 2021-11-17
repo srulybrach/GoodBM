@@ -228,7 +228,7 @@ public class App {
             msg("worker is null abort...");
             return;
         }
-        swing.cancel(true);
+        swing.cancels(true);
     }
 
     public static void startBenchmark() {
@@ -251,8 +251,9 @@ public class App {
         Gui.mainFrame.adjustSensitivity();
 
         //4. set up disk worker thread and its event handlers
-        swing = new Swing();
+        //swing = new Swing();
         worker = new DiskWorker(swing);
+        swing.setSwing(worker);
         swing.addPropertyChangeListening((final PropertyChangeEvent event) -> {
             switch (event.getPropertyName()) {
                 case "progress":
