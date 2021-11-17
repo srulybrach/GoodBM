@@ -4,6 +4,7 @@ import edu.touro.mco152.bm.ui.Gui;
 import edu.touro.mco152.bm.ui.MainFrame;
 import org.junit.jupiter.api.Test;
 
+import javax.swing.*;
 import java.io.File;
 import java.util.Properties;
 
@@ -47,24 +48,42 @@ class DiskWorkerTest {
         }
     }
 
+    //checks that the benchmark app can enter into it's state
     @Test
-    void startBenchmark(){
-        //setupDefaultAsPerProperties();
-        //App.init();
+    void startBenchmark() throws Exception {
+        setupDefaultAsPerProperties();
+        assertNotNull(App.state);
     }
 
+    //Make sure that the progress bar doesn't go negative
+    //as for these purposes that wouldn't make sense.
     @Test
     void accurateProgress(){
-
+        setupDefaultAsPerProperties();
+        App.init();
+        assertTrue(Gui.progressBar.getAlignmentX() >= 0);
+        assertTrue(Gui.progressBar.getAlignmentY() >= 0);
     }
 
+    //Test that a read and write test are possible
     @Test
     void completed(){
+        //Arrange and act
+        setupDefaultAsPerProperties();
 
+        //Assert
+        assertTrue(App.readTest);
+        assertTrue(App.writeTest);
     }
 
+    //Test that it's configured properly to be handed to DiskWorker.
     @Test
     void actedProperly(){
-
+        //Arrange and act
+        setupDefaultAsPerProperties();
+        //Assert
+        assertEquals(App.numOfBlocks, 256);
+        assertEquals(App.numOfMarks, 50);
+        assertEquals(App.blockSizeKb, 128);
     }
 }
