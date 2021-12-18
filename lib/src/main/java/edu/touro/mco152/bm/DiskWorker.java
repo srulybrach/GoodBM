@@ -37,10 +37,15 @@ import static edu.touro.mco152.bm.DiskMark.MarkType.WRITE;
  * Swing using an instance of the DiskMark class.
  */
 
-public class DiskWorker extends SwingWorker<Boolean, DiskMark> {
+public class DiskWorker{ //extends SwingWorker<Boolean, DiskMark> {
+    BenchMarkOutput outputter;
 
-    @Override
-    protected Boolean doInBackground() throws Exception {
+    public DiskWorker(BenchMarkOutput outputter){
+        this.outputter = outputter;
+    }
+
+    //@Override
+    protected Boolean doEverything() throws Exception {
 
         /*
           We 'got here' because: a) End-user clicked 'Start' on the benchmark UI,
@@ -109,7 +114,7 @@ public class DiskWorker extends SwingWorker<Boolean, DiskMark> {
               that keeps writing data (in its own loop - for specified # of blocks). Each 'Mark' is timed
               and is reported to the GUI for display as each Mark completes.
              */
-            for (int m = startFileNum; m < startFileNum + App.numOfMarks && !isCancelled(); m++) {
+            for (int m = startFileNum; m < startFileNum + App.numOfMarks && !outputter.cancelled(); m++) {
 
                 if (App.multiFile) {
                     testFile = new File(dataDir.getAbsolutePath()
@@ -143,7 +148,7 @@ public class DiskWorker extends SwingWorker<Boolean, DiskMark> {
                             /*
                               Report to GUI what percentage level of Entire BM (#Marks * #Blocks) is done.
                              */
-                            setProgress((int) percentComplete);
+                            outputter.setProgression((int) percentComplete);
                         }
                     }
                 } catch (IOException ex) {
@@ -166,7 +171,7 @@ public class DiskWorker extends SwingWorker<Boolean, DiskMark> {
                 /*
                   Let the GUI know the interim result described by the current Mark
                  */
-                publish(wMark);
+                outputter.doPublish(wMark);
 
                 // Keep track of statistics to be displayed and persisted after all Marks are done.
                 run.setRunMax(wMark.getCumMax());
@@ -193,7 +198,7 @@ public class DiskWorker extends SwingWorker<Boolean, DiskMark> {
          */
 
         // try renaming all files to clear catch
-        if (App.readTest && App.writeTest && !isCancelled()) {
+        if (App.readTest && App.writeTest && !outputter.cancelled()) {
             JOptionPane.showMessageDialog(Gui.mainFrame,
                     "For valid READ measurements please clear the disk cache by\n" +
                             "using the included RAMMap.exe or flushmem.exe utilities.\n" +
@@ -217,7 +222,7 @@ public class DiskWorker extends SwingWorker<Boolean, DiskMark> {
             Gui.chartPanel.getChart().getTitle().setVisible(true);
             Gui.chartPanel.getChart().getTitle().setText(run.getDiskInfo());
 
-            for (int m = startFileNum; m < startFileNum + App.numOfMarks && !isCancelled(); m++) {
+            for (int m = startFileNum; m < startFileNum + App.numOfMarks && !outputter.cancelled(); m++) {
 
                 if (App.multiFile) {
                     testFile = new File(dataDir.getAbsolutePath()
@@ -242,7 +247,7 @@ public class DiskWorker extends SwingWorker<Boolean, DiskMark> {
                             rUnitsComplete++;
                             unitsComplete = rUnitsComplete + wUnitsComplete;
                             percentComplete = (float) unitsComplete / (float) unitsTotal * 100f;
-                            setProgress((int) percentComplete);
+                            outputter.setProgression((int) percentComplete);
                         }
                     }
                 } catch (FileNotFoundException ex) {
@@ -256,7 +261,7 @@ public class DiskWorker extends SwingWorker<Boolean, DiskMark> {
                 msg("m:" + m + " READ IO is " + rMark.getBwMbSec() + " MB/s    "
                         + "(MBread " + mbRead + " in " + sec + " sec)");
                 App.updateMetrics(rMark);
-                publish(rMark);
+                outputter.doPublish(rMark);
 
                 run.setRunMax(rMark.getCumMax());
                 run.setRunMin(rMark.getCumMin());
@@ -281,7 +286,7 @@ public class DiskWorker extends SwingWorker<Boolean, DiskMark> {
      * Module_6_RefactorBadBM Swing_DiskWorker_Tutorial.mp4
      * @param markList a list of DiskMark objects reflecting some completed benchmarks
      */
-    @Override
+    //@Override
     protected void process(List<DiskMark> markList) {
         markList.stream().forEach((dm) -> {
             if (dm.type == DiskMark.MarkType.WRITE) {
@@ -292,7 +297,7 @@ public class DiskWorker extends SwingWorker<Boolean, DiskMark> {
         });
     }
 
-    @Override
+    //@Override
     protected void done() {
         if (App.autoRemoveData) {
             Util.deleteDirectory(dataDir);

@@ -30,4 +30,7 @@ jdm.properties
 .gradle
 
 # Ignore Gradle build output directory
-build
+build/classes
+build/generated
+build/reports
+build/tmp
