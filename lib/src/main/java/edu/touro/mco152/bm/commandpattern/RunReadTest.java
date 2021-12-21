@@ -1,8 +1,10 @@
-package edu.touro.mco152.bm;
+package edu.touro.mco152.bm.commandpattern;
 
 import edu.touro.mco152.bm.persist.DiskRun;
 
-public class RunWriteTest implements Command{
+import java.io.IOException;
+
+public class RunReadTest implements Command{
     private Tests testType;
     private BenchMarkOutput outputter;
     private int numOfBlocks;
@@ -10,8 +12,7 @@ public class RunWriteTest implements Command{
     private int blockSizeKb;
     DiskRun.BlockSequence blockSequence;
 
-
-    public RunWriteTest(BenchMarkOutput outputter, int numOfBlocks, int numOfMarks, int blockSizeKb, DiskRun.BlockSequence blockSequence, Tests testType){
+    public RunReadTest(BenchMarkOutput outputter, int numOfBlocks, int numOfMarks, int blockSizeKb, DiskRun.BlockSequence blockSequence, Tests testType){
         this.testType = testType;
         this.outputter = outputter;
         this.numOfBlocks = numOfBlocks;
@@ -22,6 +23,10 @@ public class RunWriteTest implements Command{
 
     @Override
     public void execute() {
-        testType.writeTest(outputter, numOfBlocks, numOfMarks, blockSizeKb, blockSequence);
+        try {
+            testType.readTest(outputter, numOfBlocks, numOfMarks, blockSizeKb, blockSequence);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
