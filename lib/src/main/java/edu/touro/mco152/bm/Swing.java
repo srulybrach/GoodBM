@@ -1,5 +1,6 @@
 package edu.touro.mco152.bm;
 
+import edu.touro.mco152.bm.commandpattern.BenchMarkOutput;
 import edu.touro.mco152.bm.ui.Gui;
 
 import javax.swing.*;
@@ -8,7 +9,7 @@ import java.util.List;
 
 import static edu.touro.mco152.bm.App.dataDir;
 
-public class Swing extends SwingWorker<Boolean, DiskMark> implements BenchMarkOutput{
+public class Swing extends SwingWorker<Boolean, DiskMark> implements BenchMarkOutput {
     DiskWorker worker;
 
     public void setSwing(DiskWorker worker){
