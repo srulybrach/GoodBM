@@ -1,4 +1,6 @@
-package edu.touro.mco152.bm;
+package edu.touro.mco152.bm.commandpattern;
+
+import edu.touro.mco152.bm.DiskMark;
 
 import java.beans.PropertyChangeListener;
 
