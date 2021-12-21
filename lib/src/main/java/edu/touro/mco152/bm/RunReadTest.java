@@ -12,7 +12,7 @@ public class RunReadTest implements Command{
     private int blockSizeKb;
     DiskRun.BlockSequence blockSequence;
 
-    public RunReadTest(BenchMarkOutput outputter, int numOfBlocks, int numOfMarks, int blockSizeKb, DiskRun.BlockSequence blockSequence, Tests tester){
+    public RunReadTest(BenchMarkOutput outputter, int numOfBlocks, int numOfMarks, int blockSizeKb, DiskRun.BlockSequence blockSequence, Tests testType){
         this.testType = testType;
         this.outputter = outputter;
         this.numOfBlocks = numOfBlocks;
