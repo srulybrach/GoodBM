@@ -19,7 +19,7 @@ import static edu.touro.mco152.bm.DiskMark.MarkType.READ;
 import static edu.touro.mco152.bm.DiskMark.MarkType.WRITE;
 
 public class Tests {
-    public static void writeTest(BenchMarkOutput outputter){
+    public void writeTest(BenchMarkOutput outputter, int numOfBlocks, int numOfMarks, int blockSizeKb, DiskRun.BlockSequence blockSequence){
 
             // declare local vars formerly in DiskWorker
 
@@ -44,7 +44,7 @@ public class Tests {
             int startFileNum = App.nextMarkNumber;
 
 
-            DiskRun run = new DiskRun(DiskRun.IOMode.WRITE, App.blockSequence);
+            DiskRun run = new DiskRun(DiskRun.IOMode.WRITE, blockSequence);
             run.setNumMarks(App.numOfMarks);
             run.setNumBlocks(App.numOfBlocks);
             run.setBlockSize(App.blockSizeKb);
@@ -144,7 +144,7 @@ public class Tests {
             Gui.runPanel.addRun(run);
         }
 
-    public static void readTest(BenchMarkOutput outputter) throws IOException {
+    public void readTest(BenchMarkOutput outputter, int numOfBlocks, int numOfMarks, int blockSizeKb, DiskRun.BlockSequence blockSequence) throws IOException {
             // declare local vars formerly in DiskWorker
 
             int wUnitsComplete = 0,
@@ -169,7 +169,7 @@ public class Tests {
 
 
             DiskRun run = new DiskRun(DiskRun.IOMode.READ, App.blockSequence);
-            run.setNumMarks(App.numOfMarks);
+            run.setNumMarks(numOfMarks);
             run.setNumBlocks(App.numOfBlocks);
             run.setBlockSize(App.blockSizeKb);
             run.setTxSize(App.targetTxSizeKb());

@@ -1,10 +1,10 @@
 package edu.touro.mco152.bm;
+import edu.touro.mco152.bm.persist.DiskRun;
 import edu.touro.mco152.bm.ui.Gui;
 import javax.swing.*;
 import java.util.List;
 import static edu.touro.mco152.bm.App.*;
-import static edu.touro.mco152.bm.Tests.readTest;
-import static edu.touro.mco152.bm.Tests.writeTest;
+
 
 /**
  * Run the disk benchmarking as a Swing-compliant thread (only one of these threads can run at
@@ -54,8 +54,6 @@ public class DiskWorker{ //extends SwingWorker<Boolean, DiskMark> {
             }
         }
 
-        DiskMark wMark, rMark;  // declare vars that will point to objects used to pass progress to UI
-
         Gui.updateLegend();  // init chart legend info
 
         if (App.autoReset) {
@@ -68,8 +66,14 @@ public class DiskWorker{ //extends SwingWorker<Boolean, DiskMark> {
         /*
           The GUI allows either a write, read, or both types of BMs to be started. They are done serially.
          */
+
+        Tests tester = new Tests();
+        RunReadTest reader = new RunReadTest(outputter, numOfBlocks, numOfMarks, blockSizeKb, blockSequence, tester);
+        RunWriteTest writer = new RunWriteTest(outputter, numOfBlocks, numOfMarks, blockSizeKb, blockSequence, tester);
+        Invoker invoker = new Invoker(writer, reader);
+
         if (App.writeTest) {
-            writeTest(outputter);
+            invoker.writeTestCommand();
         }
         /*
           Most benchmarking systems will try to do some cleanup in between 2 benchmark operations to
@@ -90,9 +94,8 @@ public class DiskWorker{ //extends SwingWorker<Boolean, DiskMark> {
 
         // Same as above, just for Read operations instead of Writes.
         if (App.readTest) {
-            readTest(outputter);
+            invoker.readTestCommand();
         }
-
         App.nextMarkNumber += App.numOfMarks;
         return true;
     }
