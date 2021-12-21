@@ -52,11 +52,6 @@ public class Swing extends SwingWorker<Boolean, DiskMark> implements BenchMarkOu
     }
 
     @Override
-    public boolean doEverything() throws Exception {
-        return doInBackground();
-    }
-
-    @Override
     protected void process(List<DiskMark> markList) {
         markList.stream().forEach((dm) -> {
             if (dm.type == DiskMark.MarkType.WRITE) {
