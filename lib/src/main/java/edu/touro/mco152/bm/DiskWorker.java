@@ -63,14 +63,14 @@ public class DiskWorker{ //extends SwingWorker<Boolean, DiskMark> {
             Gui.resetTestData();
         }
 
-        int startFileNum = App.nextMarkNumber;
+        //int startFileNum = App.nextMarkNumber;
 
         /*
           The GUI allows either a write, read, or both types of BMs to be started. They are done serially.
          */
-
-        writeTest(outputter);
-
+        if (App.writeTest) {
+            writeTest(outputter);
+        }
         /*
           Most benchmarking systems will try to do some cleanup in between 2 benchmark operations to
           make it more 'fair'. For example a networking benchmark might close and re-open sockets,
@@ -89,7 +89,10 @@ public class DiskWorker{ //extends SwingWorker<Boolean, DiskMark> {
         }
 
         // Same as above, just for Read operations instead of Writes.
-        readTest(outputter);
+        if (App.readTest) {
+            readTest(outputter);
+        }
+
         App.nextMarkNumber += App.numOfMarks;
         return true;
     }

@@ -20,7 +20,7 @@ import static edu.touro.mco152.bm.DiskMark.MarkType.WRITE;
 
 public class Tests {
     public static void writeTest(BenchMarkOutput outputter){
-        if (App.writeTest) {
+
             // declare local vars formerly in DiskWorker
 
             int wUnitsComplete = 0,
@@ -143,9 +143,8 @@ public class Tests {
 
             Gui.runPanel.addRun(run);
         }
-    }
+
     public static void readTest(BenchMarkOutput outputter) throws IOException {
-        if (App.readTest) {
             // declare local vars formerly in DiskWorker
 
             int wUnitsComplete = 0,
@@ -235,5 +234,5 @@ public class Tests {
 
             Gui.runPanel.addRun(run);
         }
-    }
+
 }
