@@ -29,7 +29,7 @@ public class RunWriteTest implements Command{
      * Runs the write test based on the parameters from the constructor
      */
     @Override
-    public void execute() {
-        testType.writeTest(outputter, numOfBlocks, numOfMarks, blockSizeKb, blockSequence);
+    public boolean execute() {
+        return testType.writeTest(outputter, numOfBlocks, numOfMarks, blockSizeKb, blockSequence);
     }
 }

@@ -9,6 +9,7 @@ import edu.touro.mco152.bm.ui.MainFrame;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Properties;
 
 import static edu.touro.mco152.bm.persist.DiskRun.BlockSequence.SEQUENTIAL;
@@ -59,18 +60,16 @@ class CommandTests {
      * check out DiskWorkerTest.
      */
     @Test
-    void writeTestTester(){
+    void writeTestTester() throws IOException {
         setupDefaultAsPerProperties();
-        executor.writeTestCommand();
-
+        assertTrue(executor.writeTestCommand());
     }
 
     //test a read tests functionality
     @Test
-    void readTestTester(){
+    void readTestTester() throws IOException {
         setupDefaultAsPerProperties();
-        executor.readTestCommand();
-
+        assertTrue(executor.readTestCommand());
     }
 
 }

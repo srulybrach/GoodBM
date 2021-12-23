@@ -1,4 +1,7 @@
 package edu.touro.mco152.bm.commandpattern;
+
+import java.io.IOException;
+
 public class Invoker { //also called executor
     /*
      * single class that can execute either a run test or a read test
@@ -10,11 +13,11 @@ public class Invoker { //also called executor
         this.readCommand = readCommand;
     }
 
-    public void readTestCommand(){
-        readCommand.execute();
+    public boolean readTestCommand() throws IOException {
+        return readCommand.execute();
     }
 
-    public void writeTestCommand(){
-        writeCommand.execute();
+    public boolean writeTestCommand() throws IOException {
+        return writeCommand.execute();
     }
 }

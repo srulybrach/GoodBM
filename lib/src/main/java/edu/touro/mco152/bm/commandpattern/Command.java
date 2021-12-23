@@ -1,5 +1,7 @@
 package edu.touro.mco152.bm.commandpattern;
 
+import java.io.IOException;
+
 public interface Command {
-    void execute();
+    boolean execute() throws IOException;
 }

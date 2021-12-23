@@ -30,11 +30,7 @@ public class RunReadTest implements Command{
      * Runs read test based on parameters given in constructorw
      */
     @Override
-    public void execute() {
-        try {
-            testType.readTest(outputter, numOfBlocks, numOfMarks, blockSizeKb, blockSequence);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public boolean execute() throws IOException {
+        return testType.readTest(outputter, numOfBlocks, numOfMarks, blockSizeKb, blockSequence);
     }
 }
