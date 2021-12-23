@@ -1,8 +1,13 @@
 package edu.touro.mco152.bm.commandpattern;
 
+import edu.touro.mco152.bm.BenchMarkOutput;
 import edu.touro.mco152.bm.persist.DiskRun;
 
 public class RunWriteTest implements Command{
+    /*
+     * Everything needed in order to run a write test
+     */
+
     private Tests testType;
     private BenchMarkOutput outputter;
     private int numOfBlocks;
@@ -20,6 +25,9 @@ public class RunWriteTest implements Command{
         this.blockSequence = blockSequence;
     }
 
+    /*
+     * Runs the write test based on the parameters from the constructor
+     */
     @Override
     public void execute() {
         testType.writeTest(outputter, numOfBlocks, numOfMarks, blockSizeKb, blockSequence);

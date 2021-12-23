@@ -1,10 +1,14 @@
 package edu.touro.mco152.bm.commandpattern;
 
+import edu.touro.mco152.bm.BenchMarkOutput;
 import edu.touro.mco152.bm.persist.DiskRun;
 
 import java.io.IOException;
 
 public class RunReadTest implements Command{
+    /*
+     * Everything needed to run read test
+     */
     private Tests testType;
     private BenchMarkOutput outputter;
     private int numOfBlocks;
@@ -21,6 +25,10 @@ public class RunReadTest implements Command{
         this.blockSequence = blockSequence;
     }
 
+
+    /*
+     * Runs read test based on parameters given in constructorw
+     */
     @Override
     public void execute() {
         try {

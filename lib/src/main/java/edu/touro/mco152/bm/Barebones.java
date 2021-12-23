@@ -1,11 +1,12 @@
 package edu.touro.mco152.bm;
 
-import edu.touro.mco152.bm.commandpattern.BenchMarkOutput;
-
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 
 public class Barebones implements BenchMarkOutput {
+    /*
+     * barebones (or non swing) implementation of BenchmarkOutput
+     */
     ArrayList<Integer> list = new ArrayList();
     int average;
     int mbps;
