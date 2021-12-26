@@ -1,6 +1,5 @@
 package edu.touro.mco152.bm;
 
-import edu.touro.mco152.bm.commandpattern.BenchMarkOutput;
 import edu.touro.mco152.bm.ui.Gui;
 
 import javax.swing.*;

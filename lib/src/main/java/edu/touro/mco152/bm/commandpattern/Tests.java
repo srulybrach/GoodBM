@@ -1,6 +1,7 @@
 package edu.touro.mco152.bm.commandpattern;
 
 import edu.touro.mco152.bm.App;
+import edu.touro.mco152.bm.BenchMarkOutput;
 import edu.touro.mco152.bm.DiskMark;
 import edu.touro.mco152.bm.Util;
 import edu.touro.mco152.bm.persist.DiskRun;
@@ -22,7 +23,7 @@ import static edu.touro.mco152.bm.DiskMark.MarkType.READ;
 import static edu.touro.mco152.bm.DiskMark.MarkType.WRITE;
 
 public class Tests {
-    public void writeTest(BenchMarkOutput outputter, int numOfBlocks, int numOfMarks, int blockSizeKb, DiskRun.BlockSequence blockSequence){
+    public boolean writeTest(BenchMarkOutput outputter, int numOfBlocks, int numOfMarks, int blockSizeKb, DiskRun.BlockSequence blockSequence){
 
             // declare local vars formerly in DiskWorker
 
@@ -145,9 +146,10 @@ public class Tests {
             em.getTransaction().commit();
 
             Gui.runPanel.addRun(run);
-        }
+        return true;
+    }
 
-    public void readTest(BenchMarkOutput outputter, int numOfBlocks, int numOfMarks, int blockSizeKb, DiskRun.BlockSequence blockSequence) throws IOException {
+    public boolean readTest(BenchMarkOutput outputter, int numOfBlocks, int numOfMarks, int blockSizeKb, DiskRun.BlockSequence blockSequence) throws IOException {
             // declare local vars formerly in DiskWorker
 
             int wUnitsComplete = 0,
@@ -236,6 +238,7 @@ public class Tests {
             em.getTransaction().commit();
 
             Gui.runPanel.addRun(run);
-        }
+        return true;
+    }
 
 }
