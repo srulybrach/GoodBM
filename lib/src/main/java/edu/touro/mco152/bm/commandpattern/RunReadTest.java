@@ -5,10 +5,10 @@ import edu.touro.mco152.bm.persist.DiskRun;
 
 import java.io.IOException;
 
+/**
+ * Everything needed to run the reading test command
+ */
 public class RunReadTest implements Command{
-    /*
-     * Everything needed to run read test
-     */
     private Tests testType;
     private BenchMarkOutput outputter;
     private int numOfBlocks;
@@ -16,6 +16,15 @@ public class RunReadTest implements Command{
     private int blockSizeKb;
     DiskRun.BlockSequence blockSequence;
 
+    /**
+     * Constructor that accepts everything necessary to run the read test.
+     * @param outputter
+     * @param numOfBlocks
+     * @param numOfMarks
+     * @param blockSizeKb
+     * @param blockSequence
+     * @param testType whether it is a read test or a write test
+     */
     public RunReadTest(BenchMarkOutput outputter, int numOfBlocks, int numOfMarks, int blockSizeKb, DiskRun.BlockSequence blockSequence, Tests testType){
         this.testType = testType;
         this.outputter = outputter;
@@ -26,8 +35,8 @@ public class RunReadTest implements Command{
     }
 
 
-    /*
-     * Runs read test based on parameters given in constructorw
+    /**
+     * Runs read test based on parameters given in constructor
      */
     @Override
     public boolean execute() throws IOException {

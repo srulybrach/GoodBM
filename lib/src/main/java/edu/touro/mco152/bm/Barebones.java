@@ -3,6 +3,9 @@ package edu.touro.mco152.bm;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 
+/**
+ * Outputter that saves the outputs of the benchmark internally rather than displaying it externally.
+ */
 public class Barebones implements BenchMarkOutput {
     /*
      * barebones (or non swing) implementation of BenchmarkOutput

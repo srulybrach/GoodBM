@@ -21,8 +21,21 @@ import static edu.touro.mco152.bm.App.msg;
 import static edu.touro.mco152.bm.DiskMark.MarkType.READ;
 import static edu.touro.mco152.bm.DiskMark.MarkType.WRITE;
 
+/** Single class that contains readTest() and writeTest()
+ *
+ */
 public class Tests {
     Invoker invoker = new Invoker();
+
+    /**
+     * Runs benchmark for writing
+     * @param outputter where the data of the benchmark gets outputted
+     * @param numOfBlocks
+     * @param numOfMarks
+     * @param blockSizeKb
+     * @param blockSequence
+     * @return true if the benchmark runs succesfully
+     */
     public boolean writeTest(BenchMarkOutput outputter, int numOfBlocks, int numOfMarks, int blockSizeKb, DiskRun.BlockSequence blockSequence){
 
             // declare local vars formerly in DiskWorker
@@ -138,7 +151,7 @@ public class Tests {
 
                 invoker.register(new PersistenceObserver(run));
                 invoker.register(new Gui(run));
-                invoker.register(new SlackObserver(wMark.getCumMax(), wMark.getCumAvg()));
+                //invoker.register(new SlackObserver(wMark.getCumMax(), wMark.getCumAvg()));
             } // END outer loop for specified duration (number of 'marks') for WRITE bench mark
 
             /*
@@ -148,6 +161,16 @@ public class Tests {
         return true;
     }
 
+    /**
+     * Runs read test
+     * @param outputter Where the output of the read test should go
+     * @param numOfBlocks
+     * @param numOfMarks
+     * @param blockSizeKb
+     * @param blockSequence
+     * @return true when finished running
+     * @throws IOException
+     */
     public boolean readTest(BenchMarkOutput outputter, int numOfBlocks, int numOfMarks, int blockSizeKb, DiskRun.BlockSequence blockSequence) throws IOException {
             // declare local vars formerly in DiskWorker
 
@@ -232,7 +255,7 @@ public class Tests {
 
                 invoker.register(new PersistenceObserver(run));
                 invoker.register(new Gui(run));
-                invoker.register(new SlackObserver(rMark.getCumMax(), rMark.getCumAvg()));
+                //invoker.register(new SlackObserver(rMark.getCumMax(), rMark.getCumAvg()));
             }
             invoker.inform();
         return true;

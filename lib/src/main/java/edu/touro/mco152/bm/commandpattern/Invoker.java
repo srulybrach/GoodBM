@@ -5,6 +5,9 @@ import edu.touro.mco152.bm.Observer;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Executor for the command pattern and the subject for the observer pattern
+ */
 public class Invoker { //also called executor
     /*
      * single class that can execute either a run test or a read test
