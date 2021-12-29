@@ -1,18 +1,17 @@
 package edu.touro.mco152.bm.commandpattern;
 
-import edu.touro.mco152.bm.App;
-import edu.touro.mco152.bm.BenchMarkOutput;
-import edu.touro.mco152.bm.DiskMark;
-import edu.touro.mco152.bm.Util;
-import edu.touro.mco152.bm.persist.DiskRun;
+import edu.touro.mco152.bm.*;
+import edu.touro.mco152.bm.persist.*;
 import edu.touro.mco152.bm.persist.EM;
 import edu.touro.mco152.bm.ui.Gui;
+import edu.touro.mco152.bm.ui.GuiObserver;
 import jakarta.persistence.EntityManager;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,6 +22,7 @@ import static edu.touro.mco152.bm.DiskMark.MarkType.READ;
 import static edu.touro.mco152.bm.DiskMark.MarkType.WRITE;
 
 public class Tests {
+    ArrayList<Observer> listOfObservers = new ArrayList<>();
     public boolean writeTest(BenchMarkOutput outputter, int numOfBlocks, int numOfMarks, int blockSizeKb, DiskRun.BlockSequence blockSequence){
 
             // declare local vars formerly in DiskWorker
@@ -47,8 +47,11 @@ public class Tests {
             DiskMark wMark;
             int startFileNum = App.nextMarkNumber;
 
-
             DiskRun run = new DiskRun(DiskRun.IOMode.WRITE, blockSequence);
+
+            Observer databaseObserver = new PersistenceObserver(run);
+            Observer guiObserver = new GuiObserver(run);
+
             run.setNumMarks(App.numOfMarks);
             run.setNumBlocks(App.numOfBlocks);
             run.setBlockSize(App.blockSizeKb);
@@ -140,12 +143,7 @@ public class Tests {
             /*
               Persist info about the Write BM Run (e.g. into Derby Database) and add it to a GUI panel
              */
-            EntityManager em = EM.getEntityManager();
-            em.getTransaction().begin();
-            em.persist(run);
-            em.getTransaction().commit();
-
-            Gui.runPanel.addRun(run);
+        inform();
         return true;
     }
 
@@ -231,14 +229,15 @@ public class Tests {
                 run.setRunAvg(rMark.getCumAvg());
                 run.setEndTime(new Date());
             }
-
-            EntityManager em = EM.getEntityManager();
-            em.getTransaction().begin();
-            em.persist(run);
-            em.getTransaction().commit();
-
-            Gui.runPanel.addRun(run);
+        inform();
         return true;
     }
 
+    public void register(Observer observer){
+        listOfObservers.add(observer);
+    }
+    public void inform(){
+        for(Observer observer : listOfObservers)
+            observer.update();
+    }
 }
