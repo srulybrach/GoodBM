@@ -1,9 +1,14 @@
 package edu.touro.mco152.bm;
 import edu.touro.mco152.bm.commandpattern.*;
+import edu.touro.mco152.bm.externalsys.SlackObserver;
+import edu.touro.mco152.bm.output.BenchMarkOutput;
 import edu.touro.mco152.bm.ui.Gui;
+import edu.touro.mco152.bm.persist.*;
 import javax.swing.*;
 import java.util.List;
 import static edu.touro.mco152.bm.App.*;
+//import static sun.awt.shell.ShellFolder.invoker;
+
 
 
 /**
@@ -32,8 +37,10 @@ public class DiskWorker{ //extends SwingWorker<Boolean, DiskMark> {
     }
 
     //@Override
-    protected Boolean doEverything() throws Exception {
-
+    public Boolean doEverything() throws Exception {
+        Invoker invoker = null;
+        DiskRun run = null;
+        
         /*
           We 'got here' because: a) End-user clicked 'Start' on the benchmark UI,
           which triggered the start-benchmark event associated with the App::startBenchmark()
@@ -70,7 +77,7 @@ public class DiskWorker{ //extends SwingWorker<Boolean, DiskMark> {
         Tests tester = new Tests();
         RunReadTest reader = new RunReadTest(outputter, numOfBlocks, numOfMarks, blockSizeKb, blockSequence, tester);
         RunWriteTest writer = new RunWriteTest(outputter, numOfBlocks, numOfMarks, blockSizeKb, blockSequence, tester);
-        Invoker invoker = new Invoker(writer, reader);
+        invoker = new Invoker(writer, reader);
 
         if (App.writeTest) {
             invoker.writeTestCommand();
@@ -97,6 +104,11 @@ public class DiskWorker{ //extends SwingWorker<Boolean, DiskMark> {
             invoker.readTestCommand();
         }
         App.nextMarkNumber += App.numOfMarks;
+
+        invoker.register(new PersistenceObserver(run));
+        invoker.register(new Gui(run));
+        invoker.register(new SlackObserver(tester.getrMark().getCumMax(), tester.getrMark().getCumAvg()));
+        invoker.inform();
         return true;
     }
 

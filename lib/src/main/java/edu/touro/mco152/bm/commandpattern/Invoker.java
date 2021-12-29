@@ -15,25 +15,46 @@ public class Invoker { //also called executor
     Command writeCommand;
     Command readCommand;
 
-    ArrayList<Observer> listOfObservers = new ArrayList<>();
-    Invoker(){}
+    /**
+     * Internal list of observers that get added to with register() and all get called with inform()
+     */
+    public ArrayList<Observer> listOfObservers = new ArrayList<>();
+    public Invoker(){}
 
     public Invoker(Command writeCommand, Command readCommand){
         this.writeCommand = writeCommand;
         this.readCommand = readCommand;
     }
 
+    /**
+     * runs read test
+     * @return true when test completes
+     * @throws IOException
+     */
     public boolean readTestCommand() throws IOException {
         return readCommand.execute();
     }
 
+    /**
+     * runs write test
+     * @return true when the test completes
+     * @throws IOException
+     */
     public boolean writeTestCommand() throws IOException {
         return writeCommand.execute();
     }
 
+    /**
+     * registers an observer into the list of observers
+     * @param observer observer that will be added to the list
+     */
     public void register(Observer observer){
         listOfObservers.add(observer);
     }
+
+    /**
+     * Updates every observer in the list of observers
+     */
     public void inform(){
         for(Observer observer : listOfObservers)
             observer.update();

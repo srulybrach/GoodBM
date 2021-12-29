@@ -1,10 +1,10 @@
 package edu.touro.mco152.bm.commandpattern;
 
-import edu.touro.mco152.bm.BenchMarkOutput;
+import edu.touro.mco152.bm.output.BenchMarkOutput;
 import edu.touro.mco152.bm.persist.DiskRun;
 
 /**
- * Everything needed to run the write test command
+ * Everything needed to run to write test command
  */
 public class RunWriteTest implements Command{
     private Tests testType;

@@ -1,10 +1,10 @@
 package edu.touro.mco152.bm;
 
+import edu.touro.mco152.bm.output.Barebones;
 import edu.touro.mco152.bm.ui.Gui;
 import edu.touro.mco152.bm.ui.MainFrame;
 import org.junit.jupiter.api.Test;
 
-import javax.swing.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Properties;
@@ -32,7 +32,7 @@ class DiskWorkerTest {
 
         // code from startBenchmark
         //4. create data dir reference
-        App.dataDir = new File(App.locationDir.getAbsolutePath()+File.separator+App.DATADIRNAME);
+        App.dataDir = new File("/private/var/folders/ml/3pr0wp_x5z7g6yb3qhj9_v5m0000gp/T/badBM2325896966925335521/");
 
         //5. remove existing test data if exist
         if (App.dataDir.exists()) {

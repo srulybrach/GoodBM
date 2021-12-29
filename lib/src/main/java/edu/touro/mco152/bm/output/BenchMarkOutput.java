@@ -1,4 +1,4 @@
-package edu.touro.mco152.bm;
+package edu.touro.mco152.bm.output;
 
 import edu.touro.mco152.bm.DiskMark;
 

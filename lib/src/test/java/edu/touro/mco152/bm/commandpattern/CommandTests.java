@@ -1,9 +1,7 @@
 package edu.touro.mco152.bm.commandpattern;
 
 import edu.touro.mco152.bm.App;
-import edu.touro.mco152.bm.Barebones;
-import edu.touro.mco152.bm.BenchMarkOutput;
-import edu.touro.mco152.bm.DiskWorker;
+import edu.touro.mco152.bm.output.Barebones;
 import edu.touro.mco152.bm.ui.Gui;
 import edu.touro.mco152.bm.ui.MainFrame;
 import org.junit.jupiter.api.Test;

@@ -1,6 +1,6 @@
 package edu.touro.mco152.bm.commandpattern;
 
-import edu.touro.mco152.bm.BenchMarkOutput;
+import edu.touro.mco152.bm.output.BenchMarkOutput;
 import edu.touro.mco152.bm.persist.DiskRun;
 
 import java.io.IOException;
