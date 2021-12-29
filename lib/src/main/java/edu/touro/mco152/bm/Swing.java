@@ -8,7 +8,7 @@ import java.util.List;
 
 import static edu.touro.mco152.bm.App.dataDir;
 
-public class Swing extends SwingWorker<Boolean, DiskMark> implements BenchMarkOutput{
+public class Swing extends SwingWorker<Boolean, DiskMark> implements BenchMarkOutput {
     DiskWorker worker;
 
     public void setSwing(DiskWorker worker){
@@ -49,11 +49,6 @@ public class Swing extends SwingWorker<Boolean, DiskMark> implements BenchMarkOu
     @Override
     protected Boolean doInBackground() throws Exception {
         return worker.doEverything();
-    }
-
-    @Override
-    public boolean doEverything() throws Exception {
-        return doInBackground();
     }
 
     @Override

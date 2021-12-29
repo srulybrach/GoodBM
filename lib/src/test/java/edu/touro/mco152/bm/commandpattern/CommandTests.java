@@ -1,24 +1,22 @@
-package edu.touro.mco152.bm;
+package edu.touro.mco152.bm.commandpattern;
 
+import edu.touro.mco152.bm.App;
+import edu.touro.mco152.bm.Barebones;
+import edu.touro.mco152.bm.BenchMarkOutput;
+import edu.touro.mco152.bm.DiskWorker;
 import edu.touro.mco152.bm.ui.Gui;
 import edu.touro.mco152.bm.ui.MainFrame;
 import org.junit.jupiter.api.Test;
 
-import javax.swing.*;
 import java.io.File;
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.Properties;
 
+import static edu.touro.mco152.bm.persist.DiskRun.BlockSequence.SEQUENTIAL;
 import static org.junit.jupiter.api.Assertions.*;
 
-class DiskWorkerTest {
-    /**
-     * Bruteforce setup of static classes/fields to allow DiskWorker to run.
-     *
-     * @author lcmcohen
-     */
-
-    private void setupDefaultAsPerProperties()
+class CommandTests {
+    void setupDefaultAsPerProperties()
     {
         /// Do the minimum of what  App.init() would do to allow to run.
         Gui.mainFrame = new MainFrame();
@@ -48,36 +46,30 @@ class DiskWorkerTest {
         }
     }
 
+    Barebones outputter = new Barebones();
+    Tests tester = new Tests();
+    RunReadTest readTester = new RunReadTest(outputter, 128, 25, 2048, SEQUENTIAL, tester);
+    RunWriteTest writeTester = new RunWriteTest(outputter, 128, 25, 2048, SEQUENTIAL, tester);
+    Invoker executor = new Invoker(writeTester, readTester);
 
-    Barebones barebones = new Barebones();
-    DiskWorker diskWorker = new DiskWorker(barebones);
 
-
-
-    //checks that the benchmark app can enter into it's state
+    /*
+     * Tests the run and read commands capabilities.
+     * Does NOT test for accurate results or any functionality beyond the method not crashing.
+     * Just tests that the command methods can be run without causing error. For a deeper test
+     * check out DiskWorkerTest.
+     */
     @Test
-    void startBenchmark() throws Exception {
+    void writeTestTester() throws IOException {
         setupDefaultAsPerProperties();
-        diskWorker.doEverything();
-        assertNotNull(barebones.mbps);
+        assertTrue(executor.writeTestCommand());
     }
 
-    //Make sure that the progress bar doesn't go negative
-    //as for these purposes that wouldn't make sense.
+    //test a read tests functionality
     @Test
-    void accurateProgress() throws Exception {
+    void readTestTester() throws IOException {
         setupDefaultAsPerProperties();
-        diskWorker.doEverything();
-        ArrayList<Integer> arrayList = barebones.list;
-        for(int i = 0; i < 50; i++){
-            assertTrue(arrayList.contains((Integer) i));
-        }
+        assertTrue(executor.readTestCommand());
     }
 
-    //Test that a read and write test are possible
-    @Test
-    void completed() throws Exception {
-        setupDefaultAsPerProperties();
-        assertTrue(diskWorker.doEverything());
-    }
 }
