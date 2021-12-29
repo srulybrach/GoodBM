@@ -1,6 +1,9 @@
 package edu.touro.mco152.bm.commandpattern;
 
+import edu.touro.mco152.bm.Observer;
+
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Invoker { //also called executor
     /*
@@ -8,6 +11,10 @@ public class Invoker { //also called executor
      */
     Command writeCommand;
     Command readCommand;
+
+    ArrayList<Observer> listOfObservers = new ArrayList<>();
+    Invoker(){}
+
     public Invoker(Command writeCommand, Command readCommand){
         this.writeCommand = writeCommand;
         this.readCommand = readCommand;
@@ -19,5 +26,13 @@ public class Invoker { //also called executor
 
     public boolean writeTestCommand() throws IOException {
         return writeCommand.execute();
+    }
+
+    public void register(Observer observer){
+        listOfObservers.add(observer);
+    }
+    public void inform(){
+        for(Observer observer : listOfObservers)
+            observer.update();
     }
 }

@@ -1,10 +1,10 @@
 package edu.touro.mco152.bm.commandpattern;
 
 import edu.touro.mco152.bm.*;
+import edu.touro.mco152.bm.externalsys.SlackObserver;
 import edu.touro.mco152.bm.persist.*;
 import edu.touro.mco152.bm.persist.EM;
 import edu.touro.mco152.bm.ui.Gui;
-import edu.touro.mco152.bm.ui.GuiObserver;
 import jakarta.persistence.EntityManager;
 
 import java.io.File;
@@ -22,7 +22,7 @@ import static edu.touro.mco152.bm.DiskMark.MarkType.READ;
 import static edu.touro.mco152.bm.DiskMark.MarkType.WRITE;
 
 public class Tests {
-    ArrayList<Observer> listOfObservers = new ArrayList<>();
+    Invoker invoker = new Invoker();
     public boolean writeTest(BenchMarkOutput outputter, int numOfBlocks, int numOfMarks, int blockSizeKb, DiskRun.BlockSequence blockSequence){
 
             // declare local vars formerly in DiskWorker
@@ -48,9 +48,6 @@ public class Tests {
             int startFileNum = App.nextMarkNumber;
 
             DiskRun run = new DiskRun(DiskRun.IOMode.WRITE, blockSequence);
-
-            Observer databaseObserver = new PersistenceObserver(run);
-            Observer guiObserver = new GuiObserver(run);
 
             run.setNumMarks(App.numOfMarks);
             run.setNumBlocks(App.numOfBlocks);
@@ -138,12 +135,16 @@ public class Tests {
                 run.setRunMin(wMark.getCumMin());
                 run.setRunAvg(wMark.getCumAvg());
                 run.setEndTime(new Date());
+
+                invoker.register(new PersistenceObserver(run));
+                invoker.register(new Gui(run));
+                invoker.register(new SlackObserver(wMark.getCumMax(), wMark.getCumAvg()));
             } // END outer loop for specified duration (number of 'marks') for WRITE bench mark
 
             /*
               Persist info about the Write BM Run (e.g. into Derby Database) and add it to a GUI panel
              */
-        inform();
+        invoker.inform();
         return true;
     }
 
@@ -228,16 +229,12 @@ public class Tests {
                 run.setRunMin(rMark.getCumMin());
                 run.setRunAvg(rMark.getCumAvg());
                 run.setEndTime(new Date());
-            }
-        inform();
-        return true;
-    }
 
-    public void register(Observer observer){
-        listOfObservers.add(observer);
-    }
-    public void inform(){
-        for(Observer observer : listOfObservers)
-            observer.update();
+                invoker.register(new PersistenceObserver(run));
+                invoker.register(new Gui(run));
+                invoker.register(new SlackObserver(rMark.getCumMax(), rMark.getCumAvg()));
+            }
+            invoker.inform();
+        return true;
     }
 }
