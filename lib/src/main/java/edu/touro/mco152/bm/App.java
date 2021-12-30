@@ -1,5 +1,6 @@
 package edu.touro.mco152.bm;
 
+import edu.touro.mco152.bm.output.Swing;
 import edu.touro.mco152.bm.persist.DiskRun;
 import edu.touro.mco152.bm.ui.Gui;
 import edu.touro.mco152.bm.ui.MainFrame;
@@ -29,7 +30,7 @@ public class App {
     public static final int DISK_TEST_STATE = 1;
     public static State state = State.IDLE_STATE;
     public static Properties p;
-    public static File locationDir = null;
+    public static File locationDir = null;//new File("/private/var/folders/ml/3pr0wp_x5z7g6yb3qhj9_v5m0000gp/T/badBM2325896966925335521/");
     public static File dataDir = null;
     public static File testFile = null;
     // options
@@ -79,6 +80,7 @@ public class App {
         }
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(App::init);
+
     }
 
     /**
@@ -124,6 +126,7 @@ public class App {
                 App.saveConfig();
             }
         });
+
     }
 
     public static void loadConfig() {
@@ -275,6 +278,7 @@ public class App {
         });
 
         //5. start the Swing worker thread
+
         swing.executes();
     }
 

@@ -1,15 +1,20 @@
-package edu.touro.mco152.bm;
+package edu.touro.mco152.bm.output;
+
+import edu.touro.mco152.bm.DiskMark;
 
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 
+/**
+ * Outputter that saves the outputs of the benchmark internally rather than displaying it externally.
+ */
 public class Barebones implements BenchMarkOutput {
     /*
      * barebones (or non swing) implementation of BenchmarkOutput
      */
-    ArrayList<Integer> list = new ArrayList();
+    public ArrayList<Integer> list = new ArrayList();
     int average;
-    int mbps;
+    public int mbps;
 
 
     @Override

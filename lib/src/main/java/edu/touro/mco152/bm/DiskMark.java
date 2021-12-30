@@ -8,7 +8,7 @@ import java.text.DecimalFormat;
 public class DiskMark {
 
     static DecimalFormat df = new DecimalFormat("###.###");
-    MarkType type;
+    public MarkType type;
     private int markNum = 0;       // x-axis
     private double bwMbSec = 0;    // y-axis
     private double cumMin = 0;

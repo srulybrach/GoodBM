@@ -1,13 +1,10 @@
 package edu.touro.mco152.bm.commandpattern;
 
-import edu.touro.mco152.bm.App;
-import edu.touro.mco152.bm.BenchMarkOutput;
-import edu.touro.mco152.bm.DiskMark;
-import edu.touro.mco152.bm.Util;
-import edu.touro.mco152.bm.persist.DiskRun;
-import edu.touro.mco152.bm.persist.EM;
+import edu.touro.mco152.bm.*;
+import edu.touro.mco152.bm.externalsys.SlackObserver;
+import edu.touro.mco152.bm.output.BenchMarkOutput;
+import edu.touro.mco152.bm.persist.*;
 import edu.touro.mco152.bm.ui.Gui;
-import jakarta.persistence.EntityManager;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -22,7 +19,24 @@ import static edu.touro.mco152.bm.App.msg;
 import static edu.touro.mco152.bm.DiskMark.MarkType.READ;
 import static edu.touro.mco152.bm.DiskMark.MarkType.WRITE;
 
+/** Single class that contains readTest() and writeTest()
+ *
+ */
 public class Tests {
+    Invoker invoker = new Invoker();
+
+    /**
+     * Runs benchmark for writing
+     * @param outputter where the data of the benchmark gets outputted
+     * @param numOfBlocks
+     * @param numOfMarks
+     * @param blockSizeKb
+     * @param blockSequence
+     * @return true if the benchmark runs succesfully
+     */
+
+    DiskRun run;
+    DiskMark rMark;
     public boolean writeTest(BenchMarkOutput outputter, int numOfBlocks, int numOfMarks, int blockSizeKb, DiskRun.BlockSequence blockSequence){
 
             // declare local vars formerly in DiskWorker
@@ -44,11 +58,11 @@ public class Tests {
                 }
             }
 
-            DiskMark wMark;
+            DiskMark wMark = null;
             int startFileNum = App.nextMarkNumber;
 
+            run = new DiskRun(DiskRun.IOMode.WRITE, blockSequence);
 
-            DiskRun run = new DiskRun(DiskRun.IOMode.WRITE, blockSequence);
             run.setNumMarks(App.numOfMarks);
             run.setNumBlocks(App.numOfBlocks);
             run.setBlockSize(App.blockSizeKb);
@@ -135,19 +149,22 @@ public class Tests {
                 run.setRunMin(wMark.getCumMin());
                 run.setRunAvg(wMark.getCumAvg());
                 run.setEndTime(new Date());
+
+
             } // END outer loop for specified duration (number of 'marks') for WRITE bench mark
-
-            /*
-              Persist info about the Write BM Run (e.g. into Derby Database) and add it to a GUI panel
-             */
-            EntityManager em = EM.getEntityManager();
-            em.getTransaction().begin();
-            em.persist(run);
-            em.getTransaction().commit();
-
-            Gui.runPanel.addRun(run);
         return true;
     }
+
+    /**
+     * Runs read test
+     * @param outputter Where the output of the read test should go
+     * @param numOfBlocks
+     * @param numOfMarks
+     * @param blockSizeKb
+     * @param blockSequence
+     * @return true when finished running
+     * @throws IOException
+     */
 
     public boolean readTest(BenchMarkOutput outputter, int numOfBlocks, int numOfMarks, int blockSizeKb, DiskRun.BlockSequence blockSequence) throws IOException {
             // declare local vars formerly in DiskWorker
@@ -169,7 +186,7 @@ public class Tests {
                 }
             }
 
-            DiskMark rMark;
+            rMark = null;
             int startFileNum = App.nextMarkNumber;
 
 
@@ -231,14 +248,14 @@ public class Tests {
                 run.setRunAvg(rMark.getCumAvg());
                 run.setEndTime(new Date());
             }
-
-            EntityManager em = EM.getEntityManager();
-            em.getTransaction().begin();
-            em.persist(run);
-            em.getTransaction().commit();
-
-            Gui.runPanel.addRun(run);
         return true;
     }
 
+    public DiskRun getRun(){
+        return run;
+    }
+
+    public DiskMark getrMark(){
+        return rMark;
+    }
 }
