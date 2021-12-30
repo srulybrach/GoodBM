@@ -39,7 +39,7 @@ public class DiskWorker{ //extends SwingWorker<Boolean, DiskMark> {
     //@Override
     public Boolean doEverything() throws Exception {
         Invoker invoker = null;
-        DiskRun run = null;
+
         
         /*
           We 'got here' because: a) End-user clicked 'Start' on the benchmark UI,
@@ -105,6 +105,7 @@ public class DiskWorker{ //extends SwingWorker<Boolean, DiskMark> {
         }
         App.nextMarkNumber += App.numOfMarks;
 
+        DiskRun run = tester.getRun();
         invoker.register(new PersistenceObserver(run));
         invoker.register(new Gui(run));
         invoker.register(new SlackObserver(tester.getrMark().getCumMax(), tester.getrMark().getCumAvg()));
