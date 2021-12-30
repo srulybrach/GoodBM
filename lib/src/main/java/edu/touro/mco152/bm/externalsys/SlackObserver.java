@@ -20,7 +20,7 @@ public class SlackObserver implements Observer {
     @Override
     public void update() {
         double threePercentOverAverage = average * 1.03;
-        if(average > threePercentOverAverage){
+        if(max > threePercentOverAverage){
             slackmgr.postMsg2OurChannel(":frown: Benchmark max was over 3 percent average");
         }
 
